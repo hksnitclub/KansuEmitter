@@ -18,17 +18,17 @@ import java.awt.Container;
      String str = text.getText();
      text.setPreferredSize(new Dimension(200, 25));
      text.setVisible(true);	
-     p.add(text);
      JButton button = new JButton("出力");
      button.addActionListener(null);
-     p.add(button);
      java.awt.Container contentpane = frame.getContentPane();
      contentpane.add(p, BorderLayout.CENTER);
      frame.setVisible(true);
+     p.add(text);
+     p.add(button);
     }
    public void actionPerformed(ActionEvent e){
-
-	   copyToClipboad("Desktop.getDesktop().open(" + text.getText() + ");");
+	   copyToClipboad("Desktop.getDesktop().open();");
+	   }
    }
 /*  public void JTextField() {
      JPanel panelBase = new JPanel();
@@ -38,4 +38,4 @@ import java.awt.Container;
      text.setVisible(true);
      String str = text.getText();
    } */
-}
+

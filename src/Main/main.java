@@ -1,8 +1,11 @@
 package Main;
 
+import java.awt.BorderLayout;
 import java.awt.Insets;
 
 import javax.swing.*;
+
+import com.sun.xml.internal.ws.api.server.Container;
  
  public class main{
    public static void main(String args[]){
@@ -14,7 +17,7 @@ import javax.swing.*;
      
      p.add(textfield);
     
-     Container contentpane = frame.getContentPane();
+     java.awt.Container contentpane = frame.getContentPane();
      contentpane.add(p, BorderLayout.CENTER);
      
      frame.setVisible(true);

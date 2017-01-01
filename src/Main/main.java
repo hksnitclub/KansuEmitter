@@ -1,11 +1,12 @@
 package Main;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Insets;
 
 import javax.swing.*;
 
-import com.sun.xml.internal.ws.api.server.Container;
+import java.awt.Container;
  
  public class main{
    public static void main(String args[]){
@@ -13,9 +14,10 @@ import com.sun.xml.internal.ws.api.server.Container;
      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
      frame.setSize(400,400);
      JPanel p = new JPanel();
-     JTextField textfield = new JTextField();
-     
-     p.add(textfield);
+     JTextField text = new JTextField();
+     text.setPreferredSize(new Dimension(200, 25));
+     text.setVisible(true);	
+     p.add(text);
     
      java.awt.Container contentpane = frame.getContentPane();
      contentpane.add(p, BorderLayout.CENTER);

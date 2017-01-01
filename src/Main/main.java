@@ -8,5 +8,7 @@ import javax.swing.*;
      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
      frame.setSize(400,400);
      frame.setVisible(true);
+     JTextField text = new JTextField("パスを入力して下さい");
+     String str = text.getText();
    }
 }

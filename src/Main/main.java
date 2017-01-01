@@ -9,6 +9,8 @@ import javax.swing.*;
      frame.setSize(400,400);
      frame.setVisible(true);
      JTextField text = new JTextField("パスを入力して下さい");
+     text.setSize(50,10);
+     text.setVisible(true);
      String str = text.getText();
    }
 }

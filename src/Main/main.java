@@ -1,5 +1,5 @@
-package main;
-public class Main {
+package Main;
+public class main {
 	public static void main(String[] args) {
 		new KEFrame();
 	}

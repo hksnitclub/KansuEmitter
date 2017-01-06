@@ -1,10 +1,11 @@
-package main;
+package Main;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
@@ -19,6 +20,7 @@ import javax.swing.JTextField;
 public class KEFrame extends JFrame implements ActionListener {
 	JPanel p = new JPanel();
 	JTextField text = new JTextField("パスを入力して下さい");
+	String str = text.getText();
 	JButton button = new JButton("出力");
 	public KEFrame() {
 		super("KansuEmitter");
@@ -34,7 +36,7 @@ public class KEFrame extends JFrame implements ActionListener {
 	}
 	public void actionPerformed(ActionEvent e){
 		if (e.getSource() == button) {
-			//ボタンをおした時
+			/*ボタンをおした時
 			Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 			Transferable transferable = clipboard.getContents(null);
 			if (transferable != null) {
@@ -44,8 +46,10 @@ public class KEFrame extends JFrame implements ActionListener {
 					text.setText(e1.getMessage());
 				}
 			}
-		}
+		}*/
+			
 		//copyToClipboad("Desktop.getDesktop().open();");
+		Clipboard("Desktop.getDesktop().open(" + text.getText() + ");");
 	}
 	/*public void JTextField() {
 		JPanel panelBase = new JPanel();
@@ -56,3 +60,9 @@ public class KEFrame extends JFrame implements ActionListener {
 		String str = text.getText();
 	}*/
 }
+public static void Clipboard(String select) {
+	Clipboard clipboard = Toolkit.getDefaultToolkit()
+			.getSystemClipboard();
+	StringSelection selection = new StringSelection(select);
+	clipboard.setContents(selection, selection);
+}}

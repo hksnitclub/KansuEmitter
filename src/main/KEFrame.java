@@ -18,14 +18,14 @@ import javax.swing.JTextField;
 
 public class KEFrame extends JFrame implements ActionListener {
 	JPanel p = new JPanel();
-	JTextField text = new JTextField("パスを入力して下さい");
-	JTextField text2 = new JTextField("");
-	JTextField text3 = new JTextField("");
+	JTextField text = new JTextField("入力して下さい");
+	JTextField text2 = new JTextField("入力して下さい");
+	JTextField text3 = new JTextField("入力して下さい");
 	String str = text.getText();
 	String str2 = text2.getText();
 	String str3 = text3.getText();
 	JButton button = new JButton("出力");
-	String[] combodata = {"選んでください", "二次元座標", ""};
+	String[] combodata = {"選んでください", "二次元座標", "[HTML]リンク"};
 	JComboBox combo = new JComboBox(combodata);
 	public KEFrame() {
 		super("KansuEmitter");
@@ -57,15 +57,19 @@ public class KEFrame extends JFrame implements ActionListener {
 					if (combo.getSelectedItem() == "二次元座標") {
 						Clipboard(text.getText() + "," + text2.getText());
 					}
+					if (combo.getSelectedItem() == "[HTML]リンク") {
+						Clipboard("<a href=text.getText)" + '"' + text.getText() + '"' + '>');
+					}
 					JLabel frame = new JLabel("frame");
 					JOptionPane.showMessageDialog(frame, "構文がコピーされました");
+					
 			}
 		}
 	}
 
 			/*
 			if (combo.getSelectedItem() == "ファイルを開く") {
-				Clipboard("Desktop.getDesktop().open(¥"" + text.getText() + "¥");");
+				Clipboard("Desktop.getDesktop().open( + text.getText() + "¥");");
 			}
 			if (combo.getSelectedItem() == "圧縮する") {
 				

@@ -75,9 +75,10 @@ public class KEFrame extends JFrame implements ActionListener {
 				
 			}
 */
-public static void Clipboard(String select) { //構文コピーメソッド	
-	Clipboard clipboard = Toolkit.getDefaultToolkit()
-			.getSystemClipboard();
-	StringSelection selection = new StringSelection(select);
-	clipboard.setContents(selection, selection);
-}}
+	public static void Clipboard(String select) { //構文コピーメソッド	
+		Clipboard clipboard = Toolkit.getDefaultToolkit()
+				.getSystemClipboard();
+		StringSelection selection = new StringSelection(select);
+		clipboard.setContents(selection, selection);
+	}
+}

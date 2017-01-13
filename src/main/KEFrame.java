@@ -12,58 +12,85 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class KEFrame extends JFrame implements ActionListener {
+	JMenuBar menubar = new JMenuBar();
 	JPanel p = new JPanel();
+	JMenu menu1 = new JMenu("メニュー");
+	JMenu menu2 = new JMenu("ヘルプ");
+	JMenuItem menuitem11 = new JMenuItem("終了する");
+	JMenuItem menuitem21 = new JMenuItem("バージョン情報");
+	JMenuItem menuitem22 = new JMenuItem("連絡先");
 	JTextField text = new JTextField("入力して下さい");
 	JTextField text2 = new JTextField("入力して下さい");
 	JTextField text3 = new JTextField("入力して下さい");
+	JTextField text4 = new JTextField("入力してください");
 	String str = text.getText();
 	String str2 = text2.getText();
 	String str3 = text3.getText();
 	JButton button = new JButton("出力");
-	String[] combodata = {"選んでください", "二次元座標", "[HTML]リンク"};
+	String[] combodata = {"選んでください", "二次元座標", "[HTML]リンク", "[HTML]iframe"};
 	JComboBox combo = new JComboBox(combodata);
 	public KEFrame() {
 		super("KansuEmitter");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(400,175);
+		setSize(400,200);
 		text.setPreferredSize(new Dimension(200, 25));
 		text.setVisible(true);
 		text2.setPreferredSize(new Dimension(200, 25));
 		text2.setVisible(true);
 		text3.setPreferredSize(new Dimension(200, 25));
 		text3.setVisible(true);
+		text4.setPreferredSize(new Dimension(200, 25));
+		text4.setVisible(true);
 		button.addActionListener(this);
+		menuitem11.addActionListener(this);
 		getContentPane().add(p, BorderLayout.CENTER);
 		setVisible(true);
+		p.add(menubar);
+		menubar.add(menu1);
+		menu1.add(menuitem11);
+		menubar.add(menu2);
+		menu2.add(menuitem21);
+		menu2.add(menuitem22);
 		p.add(text);
 		p.add(text2);
 		p.add(text3);
+		p.add(text4);
 		p.add(button);
 		p.add(combo);
+
 	}
 	public void actionPerformed(ActionEvent e){
 		if (e.getSource() == button) {
 			String data = (String)combo.getSelectedItem();
-			if (combo.getSelectedItem() == "選んでください") {
+			if (data == "選んでください") {
 				JLabel frame = new JLabel("frame");
 				JOptionPane.showMessageDialog(frame, "処理が選択されていません。");
 			}
 				else {
-					if (combo.getSelectedItem() == "二次元座標") {
+					if (data == "二次元座標") {
 						Clipboard(text.getText() + "," + text2.getText());
 					}
-					if (combo.getSelectedItem() == "[HTML]リンク") {
+					if (data == "[HTML]リンク") {
 						Clipboard("<a href=text.getText)" + '"' + text.getText() + '"' + '>');
+					}
+					if (data == "[HTML]iframe") {
+						Clipboard("<iframe src=" + '"' + text.getText() + '"' + " width=" + text2.getText() + " height=" + text3.getText() + ">" + text4.getText() + "</iframe>");
 					}
 					JLabel frame = new JLabel("frame");
 					JOptionPane.showMessageDialog(frame, "構文がコピーされました");
 					
 			}
+		}
+		if (e.getSource() == menuitem11) {
+			System.exit(0);
 		}
 	}
 
@@ -82,3 +109,4 @@ public class KEFrame extends JFrame implements ActionListener {
 		clipboard.setContents(selection, selection);
 	}
 }
+/*このプログラムを修正してくれた電車君とﾔｷﾆｷ、助言をしてくれた零阪父に感謝。*/

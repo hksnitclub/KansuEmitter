@@ -92,6 +92,10 @@ public class KEFrame extends JFrame implements ActionListener {
 		if (e.getSource() == menuitem11) {
 			System.exit(0);
 		}
+		if (e.getSource() == menuitem21) {
+			JLabel frame = new JLabel("frame");
+			JOptionPane.showMessageDialog(frame, "関数えみったーバージョンBeta2.0");
+		}
 	}
 
 			/*

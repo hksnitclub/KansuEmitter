@@ -55,6 +55,7 @@ public class KEFrame extends JFrame implements ActionListener {
 		text4.setVisible(true);
 		button.addActionListener(this);
 		menuitem11.addActionListener(this);
+		menuitem21.addActionListener(this);
 		getContentPane().add(p, BorderLayout.CENTER);
 		setVisible(true);
 		p.add(menubar);

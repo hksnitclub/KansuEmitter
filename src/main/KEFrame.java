@@ -31,6 +31,7 @@ public class KEFrame extends JFrame implements ActionListener {
 	JMenuItem menuitem11 = new JMenuItem("終了する");
 	JMenuItem menuitem21 = new JMenuItem("バージョン情報");
 	JMenuItem menuitem22 = new JMenuItem("連絡先");
+	JMenuItem menuitem23 = new JMenuItem("入力ヘルプ");
 	JTextField text = new JTextField("入力して下さい");
 	JTextField text2 = new JTextField("入力して下さい");
 	JTextField text3 = new JTextField("入力して下さい");
@@ -39,12 +40,12 @@ public class KEFrame extends JFrame implements ActionListener {
 	String str2 = text2.getText();
 	String str3 = text3.getText();
 	JButton button = new JButton("出力");
-	String[] combodata = {"選んでください", "二次元座標", "[HTML]リンク", "[HTML]iframe"};
+	String[] combodata = {"選んでください", "二次元座標", "[HTML]リンク", "[HTML]iframe", "", "デバッグ用"};
 	JComboBox combo = new JComboBox(combodata);
 	public KEFrame() {
 		super("KansuEmitter");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(400,200);
+		setSize(280,225);
 		text.setPreferredSize(new Dimension(200, 25));
 		text.setVisible(true);
 		text2.setPreferredSize(new Dimension(200, 25));
@@ -56,6 +57,8 @@ public class KEFrame extends JFrame implements ActionListener {
 		button.addActionListener(this);
 		menuitem11.addActionListener(this);
 		menuitem21.addActionListener(this);
+		menuitem22.addActionListener(this);
+		menuitem23.addActionListener(this);
 		getContentPane().add(p, BorderLayout.CENTER);
 		setVisible(true);
 		p.add(menubar);
@@ -64,19 +67,20 @@ public class KEFrame extends JFrame implements ActionListener {
 		menubar.add(menu2);
 		menu2.add(menuitem21);
 		menu2.add(menuitem22);
+		menu2.add(menuitem23);
 		p.add(text);
 		p.add(text2);
 		p.add(text3);
 		p.add(text4);
 		p.add(button);
 		p.add(combo);
-
 	}
 	public void actionPerformed(ActionEvent e){
+		String data = (String)combo.getSelectedItem();
+		JLabel frame = new JLabel("frame");
 		if (e.getSource() == button) {
-			String data = (String)combo.getSelectedItem();
 			if (data == "選んでください") {
-				JLabel frame = new JLabel("frame");
+				
 				JOptionPane.showMessageDialog(frame, "処理が選択されていません。");
 			}
 				else {
@@ -84,12 +88,14 @@ public class KEFrame extends JFrame implements ActionListener {
 						Clipboard(text.getText() + "," + text2.getText());
 					}
 					if (data == "[HTML]リンク") {
-						Clipboard("<a href=text.getText)" + '"' + text.getText() + '"' + '>');
+						Clipboard("<a href=" + '"' + text.getText() + '"' + '>' + text2.getText() + "</iframe>");
 					}
 					if (data == "[HTML]iframe") {
 						Clipboard("<iframe src=" + '"' + text.getText() + '"' + " width=" + text2.getText() + " height=" + text3.getText() + ">" + text4.getText() + "</iframe>");
 					}
-					JLabel frame = new JLabel("frame");
+					if (data == "デバッグ用") {
+						Clipboard("text=" + text.getText() + "text2=" + text2.getText() + "text3=" + text3.getText() + "text4=" + text4.getText());
+					}
 					JOptionPane.showMessageDialog(frame, "構文がコピーされました");
 
 			}
@@ -98,23 +104,32 @@ public class KEFrame extends JFrame implements ActionListener {
 			System.exit(0);
 		}
 		if (e.getSource() == menuitem21) {
-			JLabel frame = new JLabel("frame");
 			JOptionPane.showMessageDialog(this, viewversion_text);
 		}
-	}
-
-	public void menuitem21Action(ActionEvent e2) {
-
-	}
-
-			/*
-			if (combo.getSelectedItem() == "ファイルを開く") {
-				Clipboard("Desktop.getDesktop().open( + text.getText() + "¥");");
+		if (e.getSource() == menuitem22) {
+			JOptionPane.showMessageDialog(this, "SkypeID:LoopLine201 までどうぞ");
+		}
+		if (e.getSource() == menuitem23) {
+			if (data == "選んでください") {
+				Dialog("処理が選択されていません。");
 			}
-			if (combo.getSelectedItem() == "圧縮する") {
-
+			if (data == "二次元座標") {
+				Dialog("上からX座標、Y座標です。下二つは使いません。");
 			}
-*/
+			if (data == "[HTML]リンク") {
+			Dialog("上からリンク先URL、テキストです。下二つは使いません。");
+			}
+			if (data == "[HTML]iframe") {
+				Dialog("上から埋め込むページのパス、幅、高さ、iframeが非対応のブラウザでアクセスされたときに表示されるテキストです。");
+			}
+			if (data == "デバッグ用") {
+				Dialog("開発者用です。");
+			}
+		}
+	}
+	public void Dialog(String text) {
+		JOptionPane.showMessageDialog(this, text);
+	}
 	public static void Clipboard(String select) { //構文コピーメソッド
 		Clipboard clipboard = Toolkit.getDefaultToolkit()
 				.getSystemClipboard();

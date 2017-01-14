@@ -20,6 +20,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class KEFrame extends JFrame implements ActionListener {
+	public String version = "Beta2.00"; //バージョン情報
+	public String viewversion_text = "関数えみったーVer." + version;
+
+
 	JMenuBar menubar = new JMenuBar();
 	JPanel p = new JPanel();
 	JMenu menu1 = new JMenu("メニュー");
@@ -86,7 +90,7 @@ public class KEFrame extends JFrame implements ActionListener {
 					}
 					JLabel frame = new JLabel("frame");
 					JOptionPane.showMessageDialog(frame, "構文がコピーされました");
-					
+
 			}
 		}
 		if (e.getSource() == menuitem11) {
@@ -94,8 +98,12 @@ public class KEFrame extends JFrame implements ActionListener {
 		}
 		if (e.getSource() == menuitem21) {
 			JLabel frame = new JLabel("frame");
-			JOptionPane.showMessageDialog(frame, "関数えみったーバージョンBeta2.0");
+			JOptionPane.showMessageDialog(this, viewversion_text);
 		}
+	}
+
+	public void menuitem21Action(ActionEvent e2) {
+
 	}
 
 			/*
@@ -103,14 +111,14 @@ public class KEFrame extends JFrame implements ActionListener {
 				Clipboard("Desktop.getDesktop().open( + text.getText() + "¥");");
 			}
 			if (combo.getSelectedItem() == "圧縮する") {
-				
+
 			}
 */
-	public static void Clipboard(String select) { //構文コピーメソッド	
+	public static void Clipboard(String select) { //構文コピーメソッド
 		Clipboard clipboard = Toolkit.getDefaultToolkit()
 				.getSystemClipboard();
 		StringSelection selection = new StringSelection(select);
 		clipboard.setContents(selection, selection);
 	}
 }
-/*このプログラムを修正してくれた電車君とﾔｷﾆｷ、助言をしてくれた零阪父に感謝。*/
+/* このプログラムを修正してくれた電車君とﾔｷﾆｷ、助言をしてくれた零阪父に感謝。 */

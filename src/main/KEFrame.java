@@ -7,6 +7,10 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -20,11 +24,26 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class KEFrame extends JFrame implements ActionListener {
-	public String version = "Beta2.00"; //バージョン情報
+	public String version = "Beta2.1"; //バージョン情報
 	public String viewversion_text = "関数えみったーVer." + version;
-
-
-	JMenuBar menubar = new JMenuBar();
+	public static void main(String[] args) throws IOException {
+		//String path = ""
+		File newdir = new File("./Addons");
+		File newfile = new File("./Addons/Addlist.txt");
+		newdir.mkdir();
+		try{
+			newfile.createNewFile();
+		}
+		catch(IOException e){
+			public static void read(String[] args) throws IOException {
+				File list = new File("./Addons/Addlist.txt");
+				FileReader filereader = new FileReader(list);
+				BufferedReader br = new BufferedReader(filereader);
+				
+				String str4 = br.readLine();
+			}
+		
+JMenuBar menubar = new JMenuBar();
 	JPanel p = new JPanel();
 	JMenu menu1 = new JMenu("メニュー");
 	JMenu menu2 = new JMenu("ヘルプ");

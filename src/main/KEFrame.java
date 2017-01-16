@@ -1,4 +1,4 @@
-package Main;
+package main;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -23,27 +23,34 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+@SuppressWarnings("serial")
 public class KEFrame extends JFrame implements ActionListener {
-	public String version = "Beta2.1"; //バージョン情報
+	public String version = "Beta2.1"; // バージョン情報
 	public String viewversion_text = "関数えみったーVer." + version;
+
 	public static void main(String[] args) throws IOException {
 		//String path = ""
 		File newdir = new File("./Addons");
 		File newfile = new File("./Addons/Addlist.txt");
 		newdir.mkdir();
-		try{
+		try {
 			newfile.createNewFile();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		catch(IOException e){
-			public static void read(String[] args) throws IOException {
-				File list = new File("./Addons/Addlist.txt");
-				FileReader filereader = new FileReader(list);
-				BufferedReader br = new BufferedReader(filereader);
-				
-				String str4 = br.readLine();
-			}
+	}
+
+	public static void read(String[] args) throws IOException {
+		File list = new File("./Addons/Addlist.txt");
+		FileReader filereader = new FileReader(list);
+		BufferedReader br = new BufferedReader(filereader);
+
+		String str4 = br.readLine();
 		
-JMenuBar menubar = new JMenuBar();
+		br.close();
+	}
+
+	JMenuBar menubar = new JMenuBar();
 	JPanel p = new JPanel();
 	JMenu menu1 = new JMenu("メニュー");
 	JMenu menu2 = new JMenu("ヘルプ");
@@ -59,12 +66,13 @@ JMenuBar menubar = new JMenuBar();
 	String str2 = text2.getText();
 	String str3 = text3.getText();
 	JButton button = new JButton("出力");
-	String[] combodata = {"選んでください", "二次元座標", "[HTML]リンク", "[HTML]iframe", "", "デバッグ用"};
+	String[] combodata = { "選んでください", "二次元座標", "[HTML]リンク", "[HTML]iframe", "", "デバッグ用" };
 	JComboBox combo = new JComboBox(combodata);
+
 	public KEFrame() {
 		super("KansuEmitter");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(280,225);
+		setSize(280, 225);
 		text.setPreferredSize(new Dimension(200, 25));
 		text.setVisible(true);
 		text2.setPreferredSize(new Dimension(200, 25));
@@ -94,28 +102,30 @@ JMenuBar menubar = new JMenuBar();
 		p.add(button);
 		p.add(combo);
 	}
-	public void actionPerformed(ActionEvent e){
-		String data = (String)combo.getSelectedItem();
+
+	public void actionPerformed(ActionEvent e) {
+		String data = (String) combo.getSelectedItem();
 		JLabel frame = new JLabel("frame");
 		if (e.getSource() == button) {
 			if (data == "選んでください") {
-				
+
 				JOptionPane.showMessageDialog(frame, "処理が選択されていません。");
-			}
-				else {
-					if (data == "二次元座標") {
-						Clipboard(text.getText() + "," + text2.getText());
-					}
-					if (data == "[HTML]リンク") {
-						Clipboard("<a href=" + '"' + text.getText() + '"' + '>' + text2.getText() + "</iframe>");
-					}
-					if (data == "[HTML]iframe") {
-						Clipboard("<iframe src=" + '"' + text.getText() + '"' + " width=" + text2.getText() + " height=" + text3.getText() + ">" + text4.getText() + "</iframe>");
-					}
-					if (data == "デバッグ用") {
-						Clipboard("text=" + text.getText() + "text2=" + text2.getText() + "text3=" + text3.getText() + "text4=" + text4.getText());
-					}
-					JOptionPane.showMessageDialog(frame, "構文がコピーされました");
+			} else {
+				if (data == "二次元座標") {
+					Clipboard(text.getText() + "," + text2.getText());
+				}
+				if (data == "[HTML]リンク") {
+					Clipboard("<a href=" + '"' + text.getText() + '"' + '>' + text2.getText() + "</iframe>");
+				}
+				if (data == "[HTML]iframe") {
+					Clipboard("<iframe src=" + '"' + text.getText() + '"' + " width=" + text2.getText() + " height="
+							+ text3.getText() + ">" + text4.getText() + "</iframe>");
+				}
+				if (data == "デバッグ用") {
+					Clipboard("text=" + text.getText() + "text2=" + text2.getText() + "text3=" + text3.getText()
+							+ "text4=" + text4.getText());
+				}
+				JOptionPane.showMessageDialog(frame, "構文がコピーされました");
 
 			}
 		}
@@ -136,7 +146,7 @@ JMenuBar menubar = new JMenuBar();
 				Dialog("上からX座標、Y座標です。下二つは使いません。");
 			}
 			if (data == "[HTML]リンク") {
-			Dialog("上からリンク先URL、テキストです。下二つは使いません。");
+				Dialog("上からリンク先URL、テキストです。下二つは使いません。");
 			}
 			if (data == "[HTML]iframe") {
 				Dialog("上から埋め込むページのパス、幅、高さ、iframeが非対応のブラウザでアクセスされたときに表示されるテキストです。");
@@ -146,12 +156,13 @@ JMenuBar menubar = new JMenuBar();
 			}
 		}
 	}
+
 	public void Dialog(String text) {
 		JOptionPane.showMessageDialog(this, text);
 	}
-	public static void Clipboard(String select) { //構文コピーメソッド
-		Clipboard clipboard = Toolkit.getDefaultToolkit()
-				.getSystemClipboard();
+
+	public static void Clipboard(String select) { // 構文コピーメソッド
+		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 		StringSelection selection = new StringSelection(select);
 		clipboard.setContents(selection, selection);
 	}

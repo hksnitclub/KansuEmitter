@@ -1,4 +1,4 @@
-package main;
+package kansu;
 
 public class Main {
 	public static void main(String[] args) {

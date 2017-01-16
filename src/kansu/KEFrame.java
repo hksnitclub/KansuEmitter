@@ -1,4 +1,4 @@
-package main;
+package kansu;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

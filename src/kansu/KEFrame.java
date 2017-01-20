@@ -1,6 +1,7 @@
 package kansu;
 
 import java.awt.BorderLayout;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
@@ -11,6 +12,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -54,10 +57,13 @@ public class KEFrame extends JFrame implements ActionListener {
 	JPanel p = new JPanel();
 	JMenu menu1 = new JMenu("メニュー");
 	JMenu menu2 = new JMenu("ヘルプ");
+	JMenu menu3 = new JMenu("リンク集");
 	JMenuItem menuitem11 = new JMenuItem("終了する");
 	JMenuItem menuitem21 = new JMenuItem("バージョン情報");
 	JMenuItem menuitem22 = new JMenuItem("連絡先");
 	JMenuItem menuitem23 = new JMenuItem("入力ヘルプ");
+	JMenuItem menuitem31 = new JMenuItem("関数えみったーのGithub");
+	JMenuItem menuitem32 = new JMenuItem("rintech.org");
 	JTextField text = new JTextField("入力して下さい");
 	JTextField text2 = new JTextField("入力して下さい");
 	JTextField text3 = new JTextField("入力して下さい");
@@ -66,7 +72,7 @@ public class KEFrame extends JFrame implements ActionListener {
 	String str2 = text2.getText();
 	String str3 = text3.getText();
 	JButton button = new JButton("出力");
-	String[] combodata = { "選んでください", "二次元座標", "[HTML]リンク", "[HTML]iframe", "", "デバッグ用" };
+	String[] combodata = { "選んでください", "二次元座標", "年月日", "[HTML]リンク", "[HTML]iframe", "デバッグ用" };
 	JComboBox combo = new JComboBox(combodata);
 
 	public KEFrame() {
@@ -86,6 +92,8 @@ public class KEFrame extends JFrame implements ActionListener {
 		menuitem21.addActionListener(this);
 		menuitem22.addActionListener(this);
 		menuitem23.addActionListener(this);
+		menuitem31.addActionListener(this);
+		menuitem32.addActionListener(this);
 		getContentPane().add(p, BorderLayout.CENTER);
 		setVisible(true);
 		p.add(menubar);
@@ -95,6 +103,9 @@ public class KEFrame extends JFrame implements ActionListener {
 		menu2.add(menuitem21);
 		menu2.add(menuitem22);
 		menu2.add(menuitem23);
+		menubar.add(menu3);
+		menu3.add(menuitem31);
+		menu3.add(menuitem32);
 		p.add(text);
 		p.add(text2);
 		p.add(text3);
@@ -122,8 +133,10 @@ public class KEFrame extends JFrame implements ActionListener {
 							+ text3.getText() + ">" + text4.getText() + "</iframe>");
 				}
 				if (data == "デバッグ用") {
-					Clipboard("text=" + text.getText() + "text2=" + text2.getText() + "text3=" + text3.getText()
-							+ "text4=" + text4.getText());
+					Clipboard("text=" + text.getText() + "text2=" + text2.getText() + "text3=" + text3.getText() + "text4=" + text4.getText());
+				}
+				if (data == "年月日") {
+					Clipboard(text.getText() + "年" + text2.getText() + "月" + text3.getText() + "日");
 				}
 				JOptionPane.showMessageDialog(frame, "構文がコピーされました");
 
@@ -154,6 +167,15 @@ public class KEFrame extends JFrame implements ActionListener {
 			if (data == "デバッグ用") {
 				Dialog("開発者用です。");
 			}
+			if (data == "年月日") {
+				Dialog("上から年、月、日です。一番下は使いません。");
+			}
+		}
+		if (e.getSource() == menuitem31) {
+			BrowserOpen("https://github.com/rintech/KansuEmitter");
+		}
+		if (e.getSource() == menuitem32) {
+			BrowserOpen("http://rintech.org");
 		}
 	}
 
@@ -165,6 +187,16 @@ public class KEFrame extends JFrame implements ActionListener {
 		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 		StringSelection selection = new StringSelection(select);
 		clipboard.setContents(selection, selection);
+	}
+	public void BrowserOpen(String URL) {
+		Desktop desktop = Desktop.getDesktop();
+		try {
+			URI uri = new URI(URL);
+			desktop.browse(uri);
+		}
+		catch (IOException String) {
+		} catch (URISyntaxException e) {
+		}
 	}
 }
 /* このプログラムを修正してくれた電車君とﾔｷﾆｷ、助言をしてくれた零阪父に感謝。 */

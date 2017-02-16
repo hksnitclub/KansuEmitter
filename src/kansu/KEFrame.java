@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -112,6 +113,8 @@ public class KEFrame extends JFrame implements ActionListener {
 		p.add(text4);
 		p.add(button);
 		p.add(combo);
+		ImageIcon icon = new ImageIcon("./image/icon.png");
+		setIconImage(icon.getImage());
 	}
 
 	public void actionPerformed(ActionEvent e) {

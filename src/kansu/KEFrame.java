@@ -69,6 +69,7 @@ public class KEFrame extends JFrame implements ActionListener {
 	JTextField text2 = new JTextField("入力して下さい");
 	JTextField text3 = new JTextField("入力して下さい");
 	JTextField text4 = new JTextField("入力してください");
+	//new File();
 	String str = text.getText();
 	String str2 = text2.getText();
 	String str3 = text3.getText();

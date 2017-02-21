@@ -1,4 +1,4 @@
-package kansu;
+package org.rintech.kansuemitter;
 
 import java.awt.BorderLayout;
 import java.awt.Desktop;
@@ -9,8 +9,10 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -29,31 +31,43 @@ import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
 public class KEFrame extends JFrame implements ActionListener {
-	public String version = "Beta2.1"; // バージョン情報
-	public String viewversion_text = "関数えみったーVer." + version;
-
-	public static void main(String[] args) throws IOException {
-		//String path = ""
-		File newdir = new File("./Addons");
-		File newfile = new File("./Addons/Addlist.txt");
-		newdir.mkdir();
+	public static final String version = "Beta2.2"; // バージョン情報
+	static final File dir = new File("./Addons/");
+	
+	public static void main(String[] args) {
+		write();
+		read();
+	}
+	
+	static void read() {
+		File file = new File(dir, "Addlist.txt");
 		try {
-			newfile.createNewFile();
+			BufferedReader br = new BufferedReader(new FileReader(file));
+			String str;
+			while ((str = br.readLine()) != null) {//一行ずつ読み込む
+				System.out.println(str);
+			}
+			br.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-
-	public static void read(String[] args) throws IOException {
-		File list = new File("./Addons/Addlist.txt");
-		FileReader filereader = new FileReader(list);
-		BufferedReader br = new BufferedReader(filereader);
-
-		String str4 = br.readLine();
-		
-		br.close();
+	
+	static void write() {
+		dir.mkdirs();
+		File file = new File(dir, "Addlist.txt");
+		try {
+			file.createNewFile();//すでにファイルが有る場合は新規ファイルは作成されないのですでに書き込んであるファイルが有っても問題ない
+			BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+			bw.write("でんまるぅ");
+			bw.newLine();//改行（"\n"でも出来る）
+			bw.write("じょーまるもりもり");
+			bw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
-
+	
 	JMenuBar menubar = new JMenuBar();
 	JPanel p = new JPanel();
 	JMenu menu1 = new JMenu("メニュー");
@@ -69,14 +83,14 @@ public class KEFrame extends JFrame implements ActionListener {
 	JTextField text2 = new JTextField("入力して下さい");
 	JTextField text3 = new JTextField("入力して下さい");
 	JTextField text4 = new JTextField("入力してください");
-	//new File();
+	// new File();
 	String str = text.getText();
 	String str2 = text2.getText();
 	String str3 = text3.getText();
 	JButton button = new JButton("出力");
 	String[] combodata = { "選んでください", "二次元座標", "年月日", "[HTML]リンク", "[HTML]iframe", "デバッグ用" };
-	JComboBox combo = new JComboBox(combodata);
-
+	JComboBox<String> combo = new JComboBox<String>(combodata);
+	
 	public KEFrame() {
 		super("KansuEmitter");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -117,13 +131,13 @@ public class KEFrame extends JFrame implements ActionListener {
 		ImageIcon icon = new ImageIcon("./image/icon.png");
 		setIconImage(icon.getImage());
 	}
-
+	
 	public void actionPerformed(ActionEvent e) {
 		String data = (String) combo.getSelectedItem();
 		JLabel frame = new JLabel("frame");
 		if (e.getSource() == button) {
 			if (data == "選んでください") {
-
+				
 				JOptionPane.showMessageDialog(frame, "処理が選択されていません。");
 			} else {
 				if (data == "二次元座標") {
@@ -137,20 +151,21 @@ public class KEFrame extends JFrame implements ActionListener {
 							+ text3.getText() + ">" + text4.getText() + "</iframe>");
 				}
 				if (data == "デバッグ用") {
-					Clipboard("text=" + text.getText() + "text2=" + text2.getText() + "text3=" + text3.getText() + "text4=" + text4.getText());
+					Clipboard("text=" + text.getText() + "text2=" + text2.getText() + "text3=" + text3.getText()
+							+ "text4=" + text4.getText());
 				}
 				if (data == "年月日") {
 					Clipboard(text.getText() + "年" + text2.getText() + "月" + text3.getText() + "日");
 				}
 				JOptionPane.showMessageDialog(frame, "構文がコピーされました");
-
+				
 			}
 		}
 		if (e.getSource() == menuitem11) {
 			System.exit(0);
 		}
 		if (e.getSource() == menuitem21) {
-			JOptionPane.showMessageDialog(this, viewversion_text);
+			JOptionPane.showMessageDialog(this, "関数えみったーVer." + version);
 		}
 		if (e.getSource() == menuitem22) {
 			JOptionPane.showMessageDialog(this, "SkypeID:LoopLine201 までどうぞ");
@@ -182,23 +197,23 @@ public class KEFrame extends JFrame implements ActionListener {
 			BrowserOpen("http://rintech.org");
 		}
 	}
-
+	
 	public void Dialog(String text) {
 		JOptionPane.showMessageDialog(this, text);
 	}
-
+	
 	public static void Clipboard(String select) { // 構文コピーメソッド
 		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 		StringSelection selection = new StringSelection(select);
 		clipboard.setContents(selection, selection);
 	}
+	
 	public void BrowserOpen(String URL) {
 		Desktop desktop = Desktop.getDesktop();
 		try {
 			URI uri = new URI(URL);
 			desktop.browse(uri);
-		}
-		catch (IOException String) {
+		} catch (IOException String) {
 		} catch (URISyntaxException e) {
 		}
 	}

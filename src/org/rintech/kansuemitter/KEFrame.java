@@ -224,7 +224,7 @@ public class KEFrame extends JFrame implements ActionListener {
 	}
 	
 	public void TextCopy(String copy) {
-		copy = txt;
+		txt = copy;
 	}
 }
 /* このプログラムを修正してくれた電車君とﾔｷﾆｷ、助言をしてくれた零阪父に感謝。 */

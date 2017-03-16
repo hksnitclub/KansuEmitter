@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -67,6 +68,7 @@ public class KEFrame extends JFrame implements ActionListener {
 			e.printStackTrace();
 		}
 	}*/
+	
 	
 	JMenuBar menubar = new JMenuBar();
 	JPanel p = new JPanel();
@@ -138,6 +140,7 @@ public class KEFrame extends JFrame implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		String data = (String) combo.getSelectedItem();
+		String data2 = (String) combo2.getSelectedItem();
 		JLabel frame = new JLabel("frame");
 		if (e.getSource() == button) {
 			if (data == "選んでください") {
@@ -157,12 +160,17 @@ public class KEFrame extends JFrame implements ActionListener {
 				if (data == "デバッグ用") {
 					TextCopy("text=" + text.getText() + "text2=" + text2.getText() + "text3=" + text3.getText()
 							+ "text4=" + text4.getText());
-					Clipboard(txt);
 				}
 				if (data == "年月日") {
 					Clipboard(text.getText() + "年" + text2.getText() + "月" + text3.getText() + "日");
 				}
-				JOptionPane.showMessageDialog(frame, "構文がコピーされました");
+					if (data2 == "クリップボードに出力") {
+						Clipboard(txt);
+						Dialog("構文がコピーされました");
+					}
+					if (data2 == "テキストファイルに出力") {
+						TxtfileWrite(txt);
+					}
 				
 			}
 		}
@@ -225,6 +233,27 @@ public class KEFrame extends JFrame implements ActionListener {
 	
 	public void TextCopy(String copy) {
 		txt = copy;
+	}
+	
+	public void TxtfileWrite(String writtentext) {
+		int selected = filechooser.showOpenDialog(this);
+		if (selected == JFileChooser.APPROVE_OPTION){
+				File file = filechooser.getSelectedFile();
+					try{
+				file.createNewFile();
+				FileWriter filewriter = new FileWriter(file); //ここからうまくいってない
+				filewriter.write(writtentext);
+				filewriter.close(); //ここまでうまくいってない
+				Dialog("書き込みが完了しました"); 
+					}catch(IOException e){
+						Dialog("エラー:" + e);
+					}
+					
+			}else if (selected == JFileChooser.CANCEL_OPTION){
+				Dialog("キャンセルされました");
+			}else if (selected == JFileChooser.ERROR_OPTION){
+				Dialog("エラー又は取消しがありました");
+			}
 	}
 }
 /* このプログラムを修正してくれた電車君とﾔｷﾆｷ、助言をしてくれた零阪父に感謝。 */

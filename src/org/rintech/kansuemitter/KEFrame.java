@@ -31,9 +31,10 @@ import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
 public class KEFrame extends JFrame implements ActionListener {
-	public static final String version = "Beta2.2"; // バージョン情報
+	public static final String version = "Beta2.1.1"; // バージョン情報
 	static final File dir = new File("./Addons/");
 	String txt = new String();
+	String correct = new String();
 	
 	public static void main(String[] args) {
 		/*write();*/
@@ -148,13 +149,13 @@ public class KEFrame extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(frame, "処理が選択されていません。");
 			} else {
 				if (data == "二次元座標") {
-					Clipboard(text.getText() + "," + text2.getText());
+					TextCopy(text.getText() + "," + text2.getText());
 				}
 				if (data == "[HTML]リンク") {
-					Clipboard("<a href=" + '"' + text.getText() + '"' + '>' + text2.getText() + "</iframe>");
+					TextCopy("<a href=" + '"' + text.getText() + '"' + '>' + text2.getText() + "</iframe>");
 				}
 				if (data == "[HTML]iframe") {
-					Clipboard("<iframe src=" + '"' + text.getText() + '"' + " width=" + text2.getText() + " height="
+					TextCopy("<iframe src=" + '"' + text.getText() + '"' + " width=" + text2.getText() + " height="
 							+ text3.getText() + ">" + text4.getText() + "</iframe>");
 				}
 				if (data == "デバッグ用") {
@@ -162,7 +163,7 @@ public class KEFrame extends JFrame implements ActionListener {
 							+ "text4=" + text4.getText());
 				}
 				if (data == "年月日") {
-					Clipboard(text.getText() + "年" + text2.getText() + "月" + text3.getText() + "日");
+					TextCopy(text.getText() + "年" + text2.getText() + "月" + text3.getText() + "日");
 				}
 					if (data2 == "クリップボードに出力") {
 						Clipboard(txt);
@@ -240,12 +241,25 @@ public class KEFrame extends JFrame implements ActionListener {
 		if (selected == JFileChooser.APPROVE_OPTION){
 				File file = filechooser.getSelectedFile();
 					try{
-				file.createNewFile();
-				FileWriter filewriter = new FileWriter(file); //ここからうまくいってない
-				filewriter.write(writtentext);
-				filewriter.close(); //ここまでうまくいってない
-				Dialog("書き込みが完了しました"); 
-					}catch(IOException e){
+						if (file.exists()){
+							question("同名のファイルが存在します", "同じ名前のファイル" + file + "が存在します。上書きしますか?");
+								if(correct == "yes") {
+									file.createNewFile();
+									FileWriter filewriter = new FileWriter(file);
+									filewriter.write(writtentext);
+									filewriter.close();
+									Dialog("書き込みが完了しました"); 
+								}else{
+									Dialog("書き込みを中止しました");
+								}
+						}else{
+							file.createNewFile();
+							FileWriter filewriter = new FileWriter(file);
+							filewriter.write(writtentext);
+							filewriter.close();
+							Dialog("書き込みが完了しました"); 
+						}
+						}catch(IOException e){
 						Dialog("エラー:" + e);
 					}
 					
@@ -255,5 +269,16 @@ public class KEFrame extends JFrame implements ActionListener {
 				Dialog("エラー又は取消しがありました");
 			}
 	}
+	public void question(String Message, String Title) {
+		JFrame frame = new JFrame();
+		int answer = JOptionPane.showConfirmDialog(frame, Title, Message, JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
+		if (answer == JOptionPane.YES_OPTION){
+			correct = "yes";
+		}
+		if (answer == JOptionPane.NO_OPTION) {
+			correct = "no";
+		}
+	}
 }
+
 /* このプログラムを修正してくれた電車君とﾔｷﾆｷ、助言をしてくれた零阪父に感謝。 */

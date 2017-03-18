@@ -29,8 +29,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import java.lang.Runtime;
-
 @SuppressWarnings("serial")
 public class KEFrame extends JFrame implements ActionListener {
 	public static final String version = "Beta2.1.1"; // バージョン情報
@@ -40,7 +38,7 @@ public class KEFrame extends JFrame implements ActionListener {
 	public static void runadd() {
 	try {
 		Runtime rt = Runtime.getRuntime();
-		rt.exec("java -jar ""./Addons/KEAddonTest.jar""");
+		rt.exec("java -jar ./Addons/KEAddonTest.jar");
 	} catch (IOException ex) {
 		ex.printStackTrace();
 	}

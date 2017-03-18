@@ -29,13 +29,22 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import java.lang.Runtime;
+
 @SuppressWarnings("serial")
 public class KEFrame extends JFrame implements ActionListener {
 	public static final String version = "Beta2.1.1"; // バージョン情報
 	static final File dir = new File("./Addons/");
 	String txt = new String();
 	String correct = new String();
-	
+	public static void runadd() {
+	try {
+		Runtime rt = Runtime.getRuntime();
+		rt.exec("java -jar ""./Addons/KEAddonTest.jar""");
+	} catch (IOException ex) {
+		ex.printStackTrace();
+	}
+	}
 	public static void main(String[] args) {
 		/*write();*/
 		read();
@@ -95,6 +104,7 @@ public class KEFrame extends JFrame implements ActionListener {
 	String[] combodata2 = {"クリップボードに出力", "テキストファイルに出力" };
 	JComboBox<String> combo2 = new JComboBox<String>(combodata2);
 	String[] combodata = { "選んでください", "二次元座標", "年月日", "[HTML]リンク", "[HTML]iframe", "デバッグ用" };
+	
 	JComboBox<String> combo = new JComboBox<String>(combodata);
 	
 	public KEFrame() {
@@ -269,6 +279,7 @@ public class KEFrame extends JFrame implements ActionListener {
 				Dialog("エラー又は取消しがありました");
 			}
 	}
+	
 	public void question(String Message, String Title) {
 		JFrame frame = new JFrame();
 		int answer = JOptionPane.showConfirmDialog(frame, Title, Message, JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);

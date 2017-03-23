@@ -35,14 +35,7 @@ public class KEFrame extends JFrame implements ActionListener {
 	static final File dir = new File("./Addons/");
 	String txt = new String();
 	String correct = new String();
-	public static void runadd() {
-	try {
-		Runtime rt = Runtime.getRuntime();
-		rt.exec("java -jar ./Addons/KEAddonTest.jar");
-	} catch (IOException ex) {
-		ex.printStackTrace();
-	}
-	}
+	
 	public static void main(String[] args) {
 		/*write();*/
 		read();
@@ -89,6 +82,7 @@ public class KEFrame extends JFrame implements ActionListener {
 	JMenuItem menuitem23 = new JMenuItem("入力ヘルプ");
 	JMenuItem menuitem31 = new JMenuItem("関数えみったーのGithub");
 	JMenuItem menuitem32 = new JMenuItem("rintech.org");
+	JMenuItem menuitem12 = new JMenuItem("AddonTest");
 	JTextField text = new JTextField("入力して下さい");
 	JTextField text2 = new JTextField("入力して下さい");
 	JTextField text3 = new JTextField("入力して下さい");
@@ -119,6 +113,7 @@ public class KEFrame extends JFrame implements ActionListener {
 		text4.setVisible(true);
 		button.addActionListener(this);
 		menuitem11.addActionListener(this);
+		menuitem12.addActionListener(this);
 		menuitem21.addActionListener(this);
 		menuitem22.addActionListener(this);
 		menuitem23.addActionListener(this);
@@ -129,6 +124,7 @@ public class KEFrame extends JFrame implements ActionListener {
 		p.add(menubar);
 		menubar.add(menu1);
 		menu1.add(menuitem11);
+		menu1.add(menuitem12);
 		menubar.add(menu2);
 		menu2.add(menuitem21);
 		menu2.add(menuitem22);
@@ -185,6 +181,9 @@ public class KEFrame extends JFrame implements ActionListener {
 		}
 		if (e.getSource() == menuitem11) {
 			System.exit(0);
+		}
+		if (e.getSource() == menuitem12) {
+			run("./Addons/KEAddonTest.jar");
 		}
 		if (e.getSource() == menuitem21) {
 			JOptionPane.showMessageDialog(this, "関数えみったーVer." + version);
@@ -288,6 +287,14 @@ public class KEFrame extends JFrame implements ActionListener {
 			correct = "no";
 		}
 	}
+	public void run(String app) {
+		try {
+			Runtime rt = Runtime.getRuntime();
+			rt.exec("java -jar " + app);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		}
 }
 
 /* このプログラムを修正してくれた電車君とﾔｷﾆｷ、助言をしてくれた零阪父に感謝。 */

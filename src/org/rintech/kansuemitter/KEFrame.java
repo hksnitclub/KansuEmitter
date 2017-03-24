@@ -249,7 +249,7 @@ public class KEFrame extends JFrame implements ActionListener {
 				File file = filechooser.getSelectedFile();
 					try{
 						if (file.exists()){
-							question("同名のファイルが存在します", "同じ名前のファイル" + file + "が存在します。上書きしますか?");
+							Question("同名のファイルが存在します", "同じ名前のファイル" + file + "が存在します。上書きしますか?");
 								if(correct == "yes") {
 									file.createNewFile();
 									FileWriter filewriter = new FileWriter(file);
@@ -277,7 +277,7 @@ public class KEFrame extends JFrame implements ActionListener {
 			}
 	}
 	
-	public void question(String Message, String Title) {
+	public void Question(String Message, String Title) {
 		JFrame frame = new JFrame();
 		int answer = JOptionPane.showConfirmDialog(frame, Title, Message, JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
 		if (answer == JOptionPane.YES_OPTION){

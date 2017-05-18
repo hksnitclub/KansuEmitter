@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -241,6 +242,27 @@ public class KEFrame extends JFrame implements ActionListener {
 	
 	public void TextCopy(String copy) {
 		txt = copy;
+	}
+	
+	public void TxtRead(String File, String Hensuu) throws IOException {
+		try{
+			File file = new File(File);
+			BufferedReader br = new BufferedReader(new FileReader(file));
+			String Hensuu1 = br.readLine();
+			while(Hensuu1 != null){
+			
+
+			Hensuu1 = br.readLine();
+			Hensuu1 = Hensuu;
+			}
+		}catch(FileNotFoundException e){
+			Dialog("エラーが発生しました。 行数：253  エラー名:" + e);
+		}
+	}
+	
+	public void AddonRead(String Addon, String Syurui)
+	{
+		TxtRead("./Addons/" + Addon + "/" + Syurui + "Help/.txt");
 	}
 	
 	public void TxtfileWrite(String writtentext) {

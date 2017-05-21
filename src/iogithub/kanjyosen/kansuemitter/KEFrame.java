@@ -1,4 +1,4 @@
-package org.rintech.kansuemitter;
+package iogithub.kanjyosen.kansuemitter;
 
 import java.awt.BorderLayout;
 import java.awt.Desktop;
@@ -36,6 +36,9 @@ public class KEFrame extends JFrame implements ActionListener {
 	static final File dir = new File("./Addons/");
 	String txt = new String();
 	String correct = new String();
+	String Help = new String();
+	String Unit = new String();
+	String Name = new String();
 	
 	public static void main(String[] args) {
 		/*write();*/
@@ -81,9 +84,9 @@ public class KEFrame extends JFrame implements ActionListener {
 	JMenuItem menuitem21 = new JMenuItem("バージョン情報");
 	JMenuItem menuitem22 = new JMenuItem("連絡先");
 	JMenuItem menuitem23 = new JMenuItem("入力ヘルプ");
-	JMenuItem menuitem31 = new JMenuItem("関数えみったーのGithub");
-	JMenuItem menuitem32 = new JMenuItem("rintech.org");
-	JMenuItem menuitem12 = new JMenuItem("AddonTest");
+	//JMenuItem menuitem31 = new JMenuItem("関数えみったーのGithub");
+	//JMenuItem menuitem32 = new JMenuItem("rintech.org");
+	//JMenuItem menuitem12 = new JMenuItem("AddonTest");
 	JTextField text = new JTextField("入力して下さい");
 	JTextField text2 = new JTextField("入力して下さい");
 	JTextField text3 = new JTextField("入力して下さい");
@@ -96,7 +99,7 @@ public class KEFrame extends JFrame implements ActionListener {
 	JButton button = new JButton("出力");
 	String[] combodata2 = {"クリップボードに出力", "テキストファイルに出力" };
 	JComboBox<String> combo2 = new JComboBox<String>(combodata2);
-	String[] combodata = { "選んでください", "二次元座標", "年月日", "[HTML]リンク", "[HTML]iframe", "デバッグ用" };
+	String[] combodata = { "選んでください", "二次元座標", "年月日", "[HTML]リンク", "[HTML]iframe", "デバッグ用", Name};
 	
 	JComboBox<String> combo = new JComboBox<String>(combodata);
 	
@@ -114,25 +117,25 @@ public class KEFrame extends JFrame implements ActionListener {
 		text4.setVisible(true);
 		button.addActionListener(this);
 		menuitem11.addActionListener(this);
-		menuitem12.addActionListener(this);
+		//menuitem12.addActionListener(this);
 		menuitem21.addActionListener(this);
 		menuitem22.addActionListener(this);
 		menuitem23.addActionListener(this);
-		menuitem31.addActionListener(this);
-		menuitem32.addActionListener(this);
+		//menuitem31.addActionListener(this);
+		//menuitem32.addActionListener(this);
 		getContentPane().add(p, BorderLayout.CENTER);
 		setVisible(true);
 		p.add(menubar);
 		menubar.add(menu1);
 		menu1.add(menuitem11);
-		menu1.add(menuitem12);
+		//menu1.add(menuitem12);
 		menubar.add(menu2);
 		menu2.add(menuitem21);
 		menu2.add(menuitem22);
 		menu2.add(menuitem23);
 		menubar.add(menu3);
-		menu3.add(menuitem31);
-		menu3.add(menuitem32);
+		//menu3.add(menuitem31);
+		//menu3.add(menuitem32);
 		p.add(text);
 		p.add(text2);
 		p.add(text3);
@@ -183,9 +186,9 @@ public class KEFrame extends JFrame implements ActionListener {
 		if (e.getSource() == menuitem11) {
 			System.exit(0);
 		}
-		if (e.getSource() == menuitem12) {
-			run("./Addons/KEAddonTest.jar");
-		}
+		//if (e.getSource() == menuitem12) {
+		//	run("./Addons/KEAddonTest.jar");
+		//}
 		if (e.getSource() == menuitem21) {
 			JOptionPane.showMessageDialog(this, "関数えみったーVer." + version);
 		}
@@ -211,13 +214,16 @@ public class KEFrame extends JFrame implements ActionListener {
 			if (data == "年月日") {
 				Dialog("上から年、月、日です。一番下は使いません。");
 			}
+			if (data == Name) {
+				Dialog(Help);
+			}
 		}
-		if (e.getSource() == menuitem31) {
+		/*if (e.getSource() == menuitem31) {
 			BrowserOpen("https://github.com/rintech/KansuEmitter");
 		}
 		if (e.getSource() == menuitem32) {
 			BrowserOpen("http://rintech.org");
-		}
+		}*/
 	}
 	
 	public void Dialog(String text) {
@@ -256,13 +262,23 @@ public class KEFrame extends JFrame implements ActionListener {
 			Hensuu1 = Hensuu;
 			}
 		}catch(FileNotFoundException e){
-			Dialog("エラーが発生しました。 行数：253  エラー名:" + e);
+			Dialog("エラーが発生しました。 行数：260  エラー名:" + e);
+		}catch(IOException e){
+			Dialog("エラーが発生しました。 行数：262  エラー名:" + e);
 		}
+		
 	}
 	
 	public void AddonRead(String Addon, String Syurui)
 	{
-		TxtRead("./Addons/" + Addon + "/" + Syurui + "Help/.txt");
+		
+			try {
+				TxtRead("./Addons/" + Addon + "/" + Syurui + "Help.txt", Help);
+				TxtRead("./Addons/" + Addon + "/" + Syurui + "Name.txt", Name);
+				TxtRead("./Addons/" + Addon + "/" + Syurui + "Unit.txt", Unit);
+			} catch (IOException e) {
+				Dialog("エラーが発生しました。 行数：273  エラー名:" + e);
+			}
 	}
 	
 	public void TxtfileWrite(String writtentext) {
@@ -289,13 +305,13 @@ public class KEFrame extends JFrame implements ActionListener {
 							Dialog("書き込みが完了しました"); 
 						}
 						}catch(IOException e){
-						Dialog("エラー:" + e);
+						Dialog("エラーが発生しました。 行数：292  エラー名:" + e);
 					}
 					
 			}else if (selected == JFileChooser.CANCEL_OPTION){
 				Dialog("キャンセルされました");
 			}else if (selected == JFileChooser.ERROR_OPTION){
-				Dialog("エラー又は取消しがありました");
+				Dialog("エラーが発生しました。 行数：298");
 			}
 	}
 	

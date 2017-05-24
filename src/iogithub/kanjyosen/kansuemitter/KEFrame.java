@@ -40,10 +40,12 @@ public class KEFrame extends JFrame implements ActionListener {
 	String Unit = new String();
 	String Name = new String();
 	
-	public static void main(String[] args) {
+	{
 		/*write();*/
-		read();
+		//read();
+		AddonRead("KETestAddon", "Jijo");
 	}
+	
 	
 	static void read() {
 		File file = new File(dir, "Addlist.txt");
@@ -99,14 +101,14 @@ public class KEFrame extends JFrame implements ActionListener {
 	JButton button = new JButton("出力");
 	String[] combodata2 = {"クリップボードに出力", "テキストファイルに出力" };
 	JComboBox<String> combo2 = new JComboBox<String>(combodata2);
+	String data2 = (String) combo2.getSelectedItem();
 	String[] combodata = { "選んでください", "二次元座標", "年月日", "[HTML]リンク", "[HTML]iframe", "デバッグ用", Name};
-	
 	JComboBox<String> combo = new JComboBox<String>(combodata);
-	
 	public KEFrame() {
 		super("KansuEmitter");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(280, 255);
+		
 		text.setPreferredSize(new Dimension(200, 25));
 		text.setVisible(true);
 		text2.setPreferredSize(new Dimension(200, 25));
@@ -145,12 +147,17 @@ public class KEFrame extends JFrame implements ActionListener {
 		p.add(combo2);
 		ImageIcon icon = new ImageIcon("./image/icon.png");
 		setIconImage(icon.getImage());
+		AddonRead("KETestAddon", "Jijo");
 	}
 	
+	
 	public void actionPerformed(ActionEvent e) {
-		String data = (String) combo.getSelectedItem();
-		String data2 = (String) combo2.getSelectedItem();
+		
 		JLabel frame = new JLabel("frame");
+		String data = (String) combo.getSelectedItem();
+		
+		
+
 		if (e.getSource() == button) {
 			if (data == "選んでください") {
 				
@@ -225,18 +232,18 @@ public class KEFrame extends JFrame implements ActionListener {
 			BrowserOpen("http://rintech.org");
 		}*/
 	}
-	
+	//ここから下は零阪の自作メソッド。下手に触ると赤エラーとか吐くのでご注意。
 	public void Dialog(String text) {
 		JOptionPane.showMessageDialog(this, text);
 	}
 	
-	public static void Clipboard(String select) { // 構文コピーメソッド
+	public static void Clipboard(String select) { // 構文コピー
 		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 		StringSelection selection = new StringSelection(select);
 		clipboard.setContents(selection, selection);
 	}
 	
-	public void BrowserOpen(String URL) {
+	public void BrowserOpen(String URL) { // URLをブラウザで開く
 		Desktop desktop = Desktop.getDesktop();
 		try {
 			URI uri = new URI(URL);
@@ -246,11 +253,11 @@ public class KEFrame extends JFrame implements ActionListener {
 		}
 	}
 	
-	public void TextCopy(String copy) {
+	public void TextCopy(String copy) { // テキストをKE専用のクリップボードにコピーする
 		txt = copy;
 	}
 	
-	public void TxtRead(String File, String Hensuu) throws IOException {
+	public void TxtRead(String File, String Hensuu) throws IOException { // テキストファイルを読み込む
 		try{
 			File file = new File(File);
 			BufferedReader br = new BufferedReader(new FileReader(file));
@@ -269,19 +276,19 @@ public class KEFrame extends JFrame implements ActionListener {
 		
 	}
 	
-	public void AddonRead(String Addon, String Syurui)
+	public void AddonRead(String Addon, String Syurui) // KE規格のアドオンを読み込む
 	{
 		
 			try {
-				TxtRead("./Addons/" + Addon + "/" + Syurui + "Help.txt", Help);
-				TxtRead("./Addons/" + Addon + "/" + Syurui + "Name.txt", Name);
-				TxtRead("./Addons/" + Addon + "/" + Syurui + "Unit.txt", Unit);
+				TxtRead("./Addons/" + Addon + "/" + Syurui + "/" + "Help.txt", Help);
+				TxtRead("./Addons/" + Addon + "/" + Syurui + "/" + "Name.txt", Name);
+				TxtRead("./Addons/" + Addon + "/" + Syurui + "/" + "Unit.txt", Unit);
 			} catch (IOException e) {
 				Dialog("エラーが発生しました。 行数：273  エラー名:" + e);
 			}
 	}
 	
-	public void TxtfileWrite(String writtentext) {
+	public void TxtfileWrite(String writtentext) {// テキストファイルに書き込む
 		int selected = filechooser.showOpenDialog(this);
 		if (selected == JFileChooser.APPROVE_OPTION){
 				File file = filechooser.getSelectedFile();
@@ -315,7 +322,7 @@ public class KEFrame extends JFrame implements ActionListener {
 			}
 	}
 	
-	public void Question(String Message, String Title) {
+	public void Question(String Message, String Title) {// 質問ダイアログを出す
 		JFrame frame = new JFrame();
 		int answer = JOptionPane.showConfirmDialog(frame, Title, Message, JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
 		if (answer == JOptionPane.YES_OPTION){
@@ -325,7 +332,8 @@ public class KEFrame extends JFrame implements ActionListener {
 			correct = "no";
 		}
 	}
-	public void run(String app) {
+	
+	public void run(String app) {// jarを実行する
 		try {
 			Runtime rt = Runtime.getRuntime();
 			rt.exec("java -jar " + app);

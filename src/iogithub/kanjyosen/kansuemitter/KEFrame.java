@@ -40,7 +40,7 @@ public class KEFrame extends JFrame implements ActionListener {
 	String Unit = new String();
 	String Name = new String();
 	
-	{
+	void Reading(){
 		/*write();*/
 		//read();
 		AddonRead("KETestAddon", "Jijo");
